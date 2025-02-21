@@ -15,10 +15,10 @@ const MyAppointments = () => {
   const getUserAppointments = async () => {
     try {
       const {data}=await axios.get(backendUrl+'/api/user/appointments',{headers:{token}})
-      console.log(data)
+      // console.log(data)
       if(data.success){
         setAppointments(data.appointments.reverse());
-        console.log(data.appointments);
+        // console.log(data.appointments);
       }
       else{
         toast.error(data.message)
@@ -32,7 +32,7 @@ const MyAppointments = () => {
   const cancelAppointment=async (appointmentId) => {
     try {
       const {data}=await axios.post(backendUrl+'/api/user/cancel-appointment',{appointmentId},{headers:{token}});
-      console.log("cancelling user is",data)
+      // console.log("cancelling user is",data)
       if(data.success){
         toast.success(data.message);
         getUserAppointments()
@@ -57,11 +57,12 @@ const MyAppointments = () => {
       order_id:order.id,
       receipt:order.receipt,
       handler:async (response) => {
-       console.log(response)
+       console.log("response in 60 ",response)
        try {
         const {data}=await axios.post(backendUrl+'/api/user/verifyRazorpay',response,{headers:{token}})
-        console.log("in verifying ",data)
+        // console.log("in verifying 63",data)
         if(data.success){
+          // console.log("data.sucess 65")
           getUserAppointments();
           navigate('/my-appointments')
         }
@@ -77,10 +78,10 @@ const MyAppointments = () => {
 
   const appointmentRazorpay=async (appointmentId)=>{
     try {
-      console.log(appointmentId,"hello")
+      // console.log(appointmentId,"hello")
       const {data}=await axios.post(backendUrl+'/api/user/payment-razorpay',{appointmentId},{headers:{token}})
       if(data.success){
-        console.log(data.order);
+        // console.log(data.order);
         initPay(data.order)
       }
       else{

@@ -14,7 +14,7 @@ const Dashboard = () => {
       getDashData();
     }
   }, [aToken]);
-  console.log(dashData);
+  // console.log(dashData);
   return (
     dashData && (
       <div className=" m-5">

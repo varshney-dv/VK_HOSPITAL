@@ -16,10 +16,10 @@ const Login = () => {
         event.preventDefault()
         try {
             if(state==='Admin'){
-                console.log(backendUrl+'/api/admin/login')
+                // console.log(backendUrl+'/api/admin/login')
                 const {data} = await axios.post(backendUrl+'/api/admin/login',{email,password})
                 if(data.success){
-                    console.log(data.token)
+                    // console.log(data.token)
                     localStorage.setItem('aToken',data.token)
                     setAToken(data.token)
                     navigate('/admin-dashboard')
@@ -31,7 +31,7 @@ const Login = () => {
             else{
                 const {data}=await axios.post(backendUrl+'/api/doctor/login',{email,password})
                 if(data.success){
-                    console.log(data.token)
+                    // console.log(data.token)
                     localStorage.setItem('dToken',data.token)
                     setDToken(data.token)
                     navigate('/doctor-dashboard')

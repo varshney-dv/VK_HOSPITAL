@@ -82,11 +82,11 @@ const Login = () => {
       {
         state==='Sign Up'
         ? <p>Already have and account? <span onClick={()=>{
-          console.log("clicked on login here")
+          // console.log("clicked on login here")
           setState('Login')
         }} className=' text-primary underline cursor-pointer'>Login here</span></p>
         : <p>Create an new Account? <span onClick={()=>{
-          console.log("clicked on login here")
+          // console.log("clicked on login here")
           setState('Sign Up')
           }} className=' text-primary underline cursor-pointer'>click here</span></p>
       }

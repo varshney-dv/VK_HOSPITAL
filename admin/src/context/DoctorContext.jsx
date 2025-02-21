@@ -13,7 +13,7 @@ const DoctorContextProvider=(props)=>{
         try {
             // console.log("Inside getAppointments")
             const {data}=await axios.get(backendUrl+'/api/doctor/appointments',{headers:{dToken}})
-            console.log("data is ",data)
+            // console.log("data is ",data)
             if(data.success){
                 setAppointments(data.appointments);
             }
@@ -26,9 +26,9 @@ const DoctorContextProvider=(props)=>{
         }
     }
     const completeAppointment=async (appointmentId) => {
-        console.log("hi")
+        // console.log("hi")
         try {
-            console.log("Hii ",appointmentId)
+            // console.log("Hii ",appointmentId)
             const {data}= await axios.post(backendUrl+'/api/doctor/complete-appointment',{appointmentId},{headers:{dToken}})
             if(data.success){
                 toast.success(data.message)
@@ -73,7 +73,7 @@ const DoctorContextProvider=(props)=>{
     const getProfileData= async () => {
         try {
             const {data}=await axios.get(backendUrl+'/api/doctor/profile',{headers:{dToken}})
-            console.log(data)
+            // console.log(data)
             if(data.success){
                 setProfileData(data.profileData);
                 // console.log(data.profileData);

@@ -8,7 +8,7 @@ const Doctors = () => {
   const [filterDoc,setFilterDoc]=useState([]);
   const [filter,setFilter]=useState([])
   const [showFilter,setShowFilter] =useState(false)
-  console.log(speciality);
+  // console.log(speciality);
   const {doctors}=useContext(AppContext);
   const applyFilter=()=>{
     if(speciality){

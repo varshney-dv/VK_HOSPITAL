@@ -71,7 +71,7 @@ const loginUser=async (req,res) => {
 const getProfile=async (req,res) => {
     try {
         const {userId}=req.body
-        console.log("In fetching user profile userId is -",userId)
+        // console.log("In fetching user profile userId is -",userId)
         const userData=await userModel.findById(userId).select('-password')
         res.json({success:true,userData})
     } catch (error) {
@@ -85,7 +85,7 @@ const updateProfile=async (req,res) => {
     try {
         const {userId,name,phone,address,dob,gender}=req.body
         const imageFile=req.file
-        console.log("In update profile ",userId,name,phone,address,dob,gender,imageFile);
+        // console.log("In update profile ",userId,name,phone,address,dob,gender,imageFile);
         if(!name && !phone && !dob && !address && !gender && !imageFile){
             return res.json({success:false,message:"Data Missing"});
         }
@@ -146,7 +146,7 @@ const bookAppointment=async (req,res) => {
 const listAppointment=async (req,res) => {
     try {
         const {userId}=req.body
-        console.log("Inside listAppointment ",userId)
+        // console.log("Inside listAppointment ",userId)
         const appointments=await appointmentModel.find({userId});
         res.json({success:true,appointments})
     } catch (error) {
@@ -190,9 +190,10 @@ const paymentRazorpay= async (req,res) => {
 
     try {
         const {appointmentId}=req.body
-        console.log("In paymentRazorpay in userController ",appointmentId)
+        // console.log("In paymentRazorpay in userController ",appointmentId)
         const appointmentData=await appointmentModel.findById(appointmentId)
         if(!appointmentData || appointmentData.cancelled){
+            // console.log("Appointment not found")
             return res.json({success:false,message:"Appointment not found or it is cancelled"})
         }
 
@@ -204,6 +205,7 @@ const paymentRazorpay= async (req,res) => {
         }
         //Creation of an order
         const order = await razorpayInstance.orders.create(options);
+        // console.log(order)
         res.json({success:true,order})
 
     } catch (error) {
@@ -217,16 +219,16 @@ const paymentRazorpay= async (req,res) => {
 const verifyRazorpay=async (req,res) => {
     try {
         const {razorpay_order_id}=req.body
-        console.log("---verify---- razorpay_order_id ",razorpay_order_id)
+        // console.log("---verify---- razorpay_order_id ",razorpay_order_id)
         const orderInfo=await razorpayInstance.orders.fetch(razorpay_order_id);
-        console.log("---verify ---- OrderInfo ",orderInfo);
+        // console.log("---verify ---- OrderInfo ",orderInfo);
         if(orderInfo.status==='paid'){
-            console.log("---yes paid -----")
+            // console.log("---yes paid -----")
             await appointmentModel.findByIdAndUpdate(orderInfo.receipt,{payyment:true})
             res.json({success:true,message:"Payment Successful"})
         }
         else{
-            console.log("----else----")
+            // console.log("----else----")
             res.json({success:false,message:"Payment Failed"})
         }
     } catch (error) {

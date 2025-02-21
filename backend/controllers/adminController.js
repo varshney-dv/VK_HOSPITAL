@@ -14,7 +14,7 @@ const addDoctor = async (req,res) => {
 
         //checking for all data
         if(!(name&&email&&password&&speciality&&degree&&experience&&about&&fees&&address)){
-            console.log("For adding doctor details are ",name,email,password,speciality,degree,experience,about,fees,address,imageFile)
+            // console.log("For adding doctor details are ",name,email,password,speciality,degree,experience,about,fees,address,imageFile)
             return res.json({success:false,message:"Missing details"})
         }
 
@@ -54,9 +54,9 @@ const addDoctor = async (req,res) => {
 //API FOR Admin Login
 const loginAdmin= async (req,res) => {
     try {
-        console.log("hii")
+        // console.log("hii")
         const {email,password}=req.body;
-        console.log(email,password)
+        // console.log(email,password)
         if(email===process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD){
             const token=jwt.sign(email+password,process.env.JWT_SECRET)
             return res.json({success:true,token})

@@ -15,7 +15,7 @@ const Contact = () => {
           Suite 000, Washington, USA</p>
           <p className=' text-gray-500'>Tel: (000) 000-0000 <br />
           Email: greatstackdev@gmail.com</p>
-          <p className=' font-semibold text-lg text-gray-600'>CAREERS AT PRESCRIPTO</p>
+          <p className=' font-semibold text-lg text-gray-600'>CAREERS AT VK Hospital</p>
           <p className=' text-gray-500'>Learn more about our teams and job openings.</p>
           <button className=' border border-black text-sm px-8 py-4 hover:bg-black hover:text-white transition-all duration-300 cursor-pointer'>Explore Jobs</button>
         </div>
