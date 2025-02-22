@@ -5,7 +5,7 @@ import { assets } from '../assets/assets'
 import RelatedDoctors from '../components/RelatedDoctors'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-
+import Loading from '../components/Loading'
 const Appointment = () => {
   const navigate = useNavigate()
   const {docId}=useParams()
@@ -15,6 +15,7 @@ const Appointment = () => {
   const [docSlots,setDocSlots]=useState([])
   const [slotIndex,setSlotIndex]=useState(0)
   const [slotTime,setSlotTime]=useState('')
+  const [loading,setLoading]=useState(false)
 
   const fetchDocInfo= async()=>{
     const docInfo=doctors.find(doc=>doc._id==docId)
@@ -78,6 +79,7 @@ const Appointment = () => {
       toast.warn('Login to book appointment')
       return navigate('/login')
     }
+    setLoading(true);
     try {
       const date=docSlots[slotIndex][0].dateTime
       let day=date.getDate()
@@ -98,6 +100,7 @@ const Appointment = () => {
       console.log(error)
       toast.error(error.message)
     }
+    setLoading(false)
   }
 
   useEffect(()=>{
@@ -115,7 +118,9 @@ const Appointment = () => {
 
 
   return docInfo && (
-    <div>
+    <>
+      {
+        loading ? <Loading/> : <div>
       {/* -----Doctor Details----- */}
       <div className=' flex flex-col sm:flex-row gap-4'>
         <div>
@@ -165,6 +170,8 @@ const Appointment = () => {
       {/* ----Listing Related Doctors---- */}
       <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
     </div>
+      }
+    </>
   )
 }
 
