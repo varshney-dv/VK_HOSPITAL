@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Doctors from './pages/Doctors'
@@ -12,10 +12,39 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { ToastContainer, toast } from 'react-toastify';
 import Privacy from './components/Privacy'
-
+import axios from 'axios'
+import { AppContext } from './context/AppContext'
+import video1 from './assets/loading_laptop.mp4'
+import video2 from './assets/loading_mobile.mp4'
 const App = () => {
+  const {backendUrl}=useContext(AppContext);
+  const [wakeUp,setWakeup]=useState(false);
+
+  useEffect(() => {
+    console.log("ENTER IN FETCHDATA")
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(backendUrl + '/api/user/wake-up');
+        
+        if (data.success) {
+          toast.success("You are connected with the server");
+          setWakeup(true);
+          console.log(data.message);
+        } else {
+          toast.error(data.error);
+        }
+      } catch (error) {
+        toast.error("Server connection failed");
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
-    <div className='mx-4 sm:mx-[10%]' >
+    <>
+      {
+        wakeUp ?
+        <div className='mx-4 sm:mx-[10%]' >
     <ToastContainer/>
     <Navbar/>
     <Routes>
@@ -32,6 +61,17 @@ const App = () => {
     </Routes>
     <Footer/>
     </div>
+    : 
+    <div className="fixed top-0 left-0 w-full h-full">
+    <video autoPlay muted loop className="w-full h-full object-cover md:hidden">
+    <source src={video2} type="video/mp4" />
+  </video>
+  <video autoPlay muted loop className="w-full h-full object-cover hidden md:block">
+    <source src={video1} type="video/mp4" />
+  </video>
+</div>
+      }
+    </>
   )
 }
 

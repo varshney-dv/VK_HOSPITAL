@@ -237,5 +237,15 @@ const verifyRazorpay=async (req,res) => {
     }
 }
 
+const serverWaker = async (req,res) => {
+    try {
+        console.log("clicked the waker")
+        res.json({success:true,message:"Server is Wake up !!"})
+    } catch (error) {
+        console.log("Error in Server connection ",error);
+        res.json({success:"false",message:error.message})
+    }
+}
 
-export {registerUser,loginUser,getProfile,updateProfile,bookAppointment,listAppointment,cancelAppointment,paymentRazorpay,verifyRazorpay}
+
+export {registerUser,loginUser,getProfile,updateProfile,bookAppointment,listAppointment,cancelAppointment,paymentRazorpay,verifyRazorpay,serverWaker}
