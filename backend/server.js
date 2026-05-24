@@ -6,6 +6,7 @@ import connectCloudinary from "./config/cloudinary.js"
 import adminRouter from "./routes/adminRoute.js"
 import doctorRouter from "./routes/doctorRoute.js"
 import userRouter from "./routes/userRoute.js"
+import aiRouter from "./routes/aiRoute.js"
 //app config
 const app=express()
 
@@ -27,8 +28,12 @@ app.use('/api/doctor',doctorRouter);
 
 app.use('/api/user',userRouter)
 // localhost:4000/api/user
+
+app.use('/api/ai',aiRouter)
+// localhost:4000/api/ai
+
 app.get('/',(req,res)=>{
     res.send("API WORKING GREAT")
 })
 
-app.listen(port,()=>console.log("Server started , port is : ",port))
+app.listen(port,()=>console.log("Server started, port is: ",port))

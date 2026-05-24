@@ -27,6 +27,7 @@ const Navbar = () => {
       <ul className="hidden md:flex items-start gap-5 font-medium">
         <NavLink to="/"><li className="py-1">Home</li></NavLink>
         <NavLink to="/doctors"><li className="py-1">All Doctors</li></NavLink>
+        <NavLink to="/ai-checker"><li className="py-1">AI Checker</li></NavLink>
         <NavLink to="/about"><li className="py-1">About</li></NavLink>
         <NavLink to="/contact"><li className="py-1">Contact</li></NavLink>
       </ul>
@@ -76,6 +77,7 @@ const Navbar = () => {
           <ul className="flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium">
             <NavLink to="/" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">Home</p></NavLink>
             <NavLink to="/doctors" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">All Doctors</p></NavLink>
+            <NavLink to="/ai-checker" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">AI Checker</p></NavLink>
             <NavLink to="/about" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">About</p></NavLink>
             <NavLink to="/contact" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">Contact</p></NavLink>
             {!token && !userData && <NavLink to="/login" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">Login</p></NavLink> }
