@@ -24,12 +24,20 @@ const Navbar = () => {
       />
 
       {/* ---- Desktop Menu ---- */}
-      <ul className="hidden md:flex items-start gap-5 font-medium">
+      <ul className="hidden md:flex items-center gap-5 font-medium">
         <NavLink to="/"><li className="py-1">Home</li></NavLink>
         <NavLink to="/doctors"><li className="py-1">All Doctors</li></NavLink>
         <NavLink to="/ai-checker"><li className="py-1">AI Checker</li></NavLink>
         <NavLink to="/about"><li className="py-1">About</li></NavLink>
         <NavLink to="/contact"><li className="py-1">Contact</li></NavLink>
+        <a 
+          href="https://admin-hospital.divyanshuvarshney.online/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-600 border border-indigo-100 px-3 py-1 rounded-full font-semibold transition-all"
+        >
+          Admin Portal
+        </a>
       </ul>
 
       {/* ---- Right Section ---- */}
@@ -80,6 +88,15 @@ const Navbar = () => {
             <NavLink to="/ai-checker" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">AI Checker</p></NavLink>
             <NavLink to="/about" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">About</p></NavLink>
             <NavLink to="/contact" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">Contact</p></NavLink>
+            <a 
+              href="https://admin-hospital.divyanshuvarshney.online/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              onClick={() => setShowMenu(false)}
+              className="mt-2 text-base text-indigo-600 bg-indigo-50 border border-indigo-100 px-6 py-2 rounded-full font-semibold"
+            >
+              Admin Portal
+            </a>
             {!token && !userData && <NavLink to="/login" onClick={() => setShowMenu(false)}><p className="px-4 py-2 rounded">Login</p></NavLink> }
           </ul>
         </div>
