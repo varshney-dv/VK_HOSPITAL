@@ -1,5 +1,9 @@
 # 🏥 VK Hospital - Premium MERN + LangChain AI Management System
 
+🔗 **Live Link:** [https://hospital.divyanshuvarshney.online/](https://hospital.divyanshuvarshney.online/)
+
+![VK Hospital Frontend Page Banner](frontend/src/assets/Frontend_page_banner.jpeg)
+
 VK Hospital is a comprehensive, production-grade Healthcare Management Platform designed to bridge the gap between patients, doctors, and administrators. It features a fully integrated **AI Symptom Checker & Doctor Recommendation System** powered by a modular, fault-tolerant **LangChain** architecture.
 
 ---
