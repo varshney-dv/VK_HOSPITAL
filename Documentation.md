@@ -259,7 +259,7 @@ Both frontend applications leverage React Router and Context API to implement cl
 
 ### 6.2. Admin & Doctor Portal Routing & Dashboard Layout
 Authentication controls access. If no JWT token is stored locally, it forces the user to the log in view (which switches between Admin and Doctor login modes).
-*   **Admin Dashboard (`/admin-dashboard`)**: Displays total metrics (doctors, patients, appointments) alongside a detailed timeline of recent actions.
+*   **Admin Dashboard (`/admin-dashboard`)**: Operations Hub featuring real-time telemetry metrics (Total Doctors, Consultations, Unique Patients, and Estimated Revenue) alongside **zero-dependency interactive SVG analytics visualizations** (dynamic line chart trendlines with mouse-hover tooltips, SVG donut chart status breakdowns, department demand analysis bars, and top specialist leaderboards). Also displays recent patient registration logs.
 *   **Add Doctor (`/add-doctor`)**: Admin-only route featuring validation forms to register and save doctor profiles.
 *   **Doctors List (`/doctor-list`)**: Lists all registered doctors, providing a toggle to edit active availability status.
 *   **Doctor Dashboard (`/doctor-dashboard`)**: Personalized view displaying the doctor's earnings, unique patients, and total appointments.

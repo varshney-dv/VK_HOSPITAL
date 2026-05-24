@@ -12,7 +12,7 @@ VK Hospital is a comprehensive, production-grade Healthcare Management Platform 
 
 *   **Patient Portal:** Search doctors by specialty, book slots across a dynamic calendar, manage profiles, cancel appointments, and make online payments.
 *   **AI Symptom Checker:** Analyze symptoms using natural language, evaluate severity, view precautions, and automatically get routed to matching, available specialists.
-*   **Admin Dashboard:** Onboard doctors, edit availability, manage appointments globally, and view real-time statistics.
+*   **Admin Operations Dashboard:** High-end BI hub featuring onboarding flows, global booking controls, and custom SVG interactive visualizations (Real-time estimated income, line charts for booking trends, specialty demand analysis, and status breakdowns).
 *   **Doctor Panel:** Manage individual appointments, mark consultations as complete, adjust fees/address, and monitor monthly earnings.
 *   **Secure Payment Integration:** Online consultation fee payments processed securely via the Razorpay Gateway.
 *   **Dynamic Media Storage:** Multi-part file uploads using Multer paired with Cloudinary CDN storage.
@@ -49,6 +49,18 @@ graph TD
 1.  **Provider Failover:** Automatically switches from OpenAI to Gemini if keys are invalid or rate-limits are reached.
 2.  **Model Fallback:** Within the Gemini pipeline, automatically transitions from `gemini-1.5-flash` to `gemini-2.5-flash` to prevent service downtime.
 3.  **Timeout limit:** Limits AI response times to `15 seconds` using `Promise.race()`.
+
+---
+
+## 📊 Operations & Analytics Dashboard
+
+To maximize resume value and platform control, the Admin Dashboard has been upgraded with a **zero-dependency interactive SVG visualization engine**:
+
+*   **Interactive Area Trendline:** Hand-drawn SVG charts with hover state markers. Users can hover over vertices to show tooltips with specific date volumes.
+*   **SVG Circular Donut Chart:** A custom SVG calculation showing the exact proportion of completed, cancelled, and pending appointments in real-time.
+*   **Department Demand Analysis:** Beautiful CSS progress bars calculating booking frequency per specialty department.
+*   **Top Practitioner Leaderboard:** Real-time leaderboard listing the top 3 doctors based on appointment booking frequency.
+*   **Estimated Revenue KPI:** Real-time earnings summary based on total booking values.
 
 ---
 
