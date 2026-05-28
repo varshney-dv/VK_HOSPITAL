@@ -13,8 +13,8 @@ This document serves as an end-to-end technical guide for the **VK Hospital** pr
 
 ### Tech Stack
 *   **Database**: MongoDB (via Mongoose ODM)
-*   **Backend**: Node.js & Express (ES6 Modules)
-*   **Frontend & Admin Panels**: React.js (built with Vite, styled with TailwindCSS, utilizing React Router Dom for SPA navigation, Axios for HTTP client operations, and React Toastify for user feedback).
+*   **Backend**: Node.js & Express (ES6 Modules), `google-auth-library`
+*   **Frontend & Admin Panels**: React.js (built with Vite, styled with TailwindCSS, utilizing React Router Dom for SPA navigation, Axios for HTTP client operations, Google Identity Services SDK, and React Toastify for user feedback).
 *   **Media Management**: Multer (local parsing) paired with Cloudinary (cloud asset storage).
 *   **Payment Gateway**: Razorpay API Integration.
 
@@ -183,6 +183,7 @@ Handles physician logs, schedules, and profile updates.
 Powers patient portal capabilities and booking transactions.
 *   `POST /register`: Registers new patient, hashes password, saves record, and returns user JWT.
 *   `POST /login`: Standard authentication returning login token.
+*   `POST /google-login`: Verifies the Google Identity Services JWT id token, registers new accounts automatically with safe defaults, and returns local JWT.
 *   `GET /get-profile` **[Auth Required]**: Obtains current user's profile card (excluding passwords).
 *   `POST /update-profile` **[Auth Required]**: Updates demographic records (name, phone, dob, address, gender) and optionally uploads a new profile photo.
 *   `POST /book-appointment` **[Auth Required]**: Validates doctor's availability, checks if slot is booked, updates doctor's schedule records, and inserts the new appointment record.
@@ -288,6 +289,7 @@ RAZORPAY_KEY_ID='your_razorpay_key_id'
 RAZORPAY_KEY_SECRET='your_razorpay_key_secret'
 CURRENCY='INR'
 PORT=4000
+GOOGLE_CLIENT_ID='your_google_oauth_client_id.apps.googleusercontent.com'
 ```
 
 ### Step 2: Configure Frontend & Admin Environments
@@ -295,6 +297,7 @@ Create a `.env` file in the `/frontend` directory:
 ```env
 VITE_BACKEND_URL='http://localhost:4000'
 VITE_RAZORPAY_KEY_ID='your_razorpay_key_id'
+VITE_GOOGLE_CLIENT_ID='your_google_oauth_client_id.apps.googleusercontent.com'
 ```
 
 Create a `.env` file in the `/admin` directory:
@@ -387,3 +390,19 @@ gantt
 *   **Date Slots Formatting**: Slots are stored using the `slotDate` format of `Day_Month_Year` (e.g. `24_05_2026`). Make sure frontend formatting matches this query key exactly when reading or writing to `slots_booked`.
 *   **Decimal/Currency Multipliers**: Razorpay processes currency amounts in their smallest units (paise for INR). Always multiply fees by `100` before creating orders (`amount * 100`) and handle dividing appropriately on display screens if necessary.
 *   **JSON Parsing in Multer**: Because multer processes multi-part form data, JSON fields (like `address`) sent via form-data must be parsed explicitly using `JSON.parse(address)` in your controller logic.
+
+---
+
+## 10. UI/UX Design System Configurations
+
+### Mobile Responsive Google Sign-in Buttons
+The official Google GSI SDK iframe button does not support fluid percentages (e.g. `width: 100%`). To prevent button overflow on mobile screens:
+* We listen to window resize events and update button width dynamically in `Login.jsx`.
+* Width calculation: `Math.min(382, window.innerWidth - 96)` constrained to a minimum width of `200` (required by Google's API).
+* The GSI button text label renders conditionally as "Sign up with Google" or "Sign in with Google" depending on whether the auth card state toggles between Login and Register modes.
+
+### Colliding Session Recovery
+Since multiple local projects run on `localhost:5173`, they share the browser's `localStorage` scope. If the client sends an invalid JWT signature (e.g., token from another project) to `/api/user/get-profile`:
+* Standardized backend catch blocks and middlewares (`authUser.js`) return boolean `success: false` on exception catch logs.
+* Frontend `loadUserProfileData` automatically clears the stale/colliding token from `localStorage` on verification errors, cleanly logging out the client and prompting a fresh authentication session.
+

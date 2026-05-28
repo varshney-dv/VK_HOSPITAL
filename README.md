@@ -12,6 +12,7 @@ VK Hospital is a comprehensive, production-grade Healthcare Management Platform 
 
 *   **Patient Portal:** Search doctors by specialty, book slots across a dynamic calendar, manage profiles, cancel appointments, and make online payments.
 *   **AI Symptom Checker:** Analyze symptoms using natural language, evaluate severity, view precautions, and automatically get routed to matching, available specialists.
+*   **Google Authentication:** Secure one-tap sign-in and sign-up using the official Google Identity Services SDK, with responsive mobile resizing and colliding localhost session automatic recovery.
 *   **Admin Operations Dashboard:** High-end BI hub featuring onboarding flows, global booking controls, and custom SVG interactive visualizations (Real-time estimated income, line charts for booking trends, specialty demand analysis, and status breakdowns).
 *   **Doctor Panel:** Manage individual appointments, mark consultations as complete, adjust fees/address, and monitor monthly earnings.
 *   **Secure Payment Integration:** Online consultation fee payments processed securely via the Razorpay Gateway.
@@ -92,13 +93,13 @@ VK_HOSPITAL/
 
 ---
 
-## 🛠️ Installation & Setup
-
+## 🛠 "Installation & Setup
+ 
 ### Prerequisites
 *   Node.js (v18+)
 *   npm (v9+)
 *   MongoDB Account (Atlas or Local)
-
+ 
 ### Step 1: Configure Backend Environment
 Create a `.env` file inside `/backend` and populate it with your credentials:
 ```env
@@ -113,6 +114,7 @@ RAZORPAY_KEY_ID='your_razorpay_key_id'
 RAZORPAY_KEY_SECRET='your_razorpay_key_secret'
 CURRENCY='INR'
 PORT=4000
+GOOGLE_CLIENT_ID='your_google_oauth_client_id.apps.googleusercontent.com'
 
 # AI Configuration
 AI_PROVIDER='openai' # 'openai' or 'gemini'
@@ -125,6 +127,7 @@ Create a `.env` file in the `/frontend` directory:
 ```env
 VITE_BACKEND_URL='http://localhost:4000'
 VITE_RAZORPAY_KEY_ID='your_razorpay_key_id'
+VITE_GOOGLE_CLIENT_ID='your_google_oauth_client_id.apps.googleusercontent.com'
 ```
 
 Create a `.env` file in the `/admin` directory:

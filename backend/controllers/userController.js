@@ -7,6 +7,10 @@ import {v2 as cloudinary} from "cloudinary"
 import doctorModel from "../modules/doctorModel.js"
 import appointmentModel from "../modules/appointmentModel.js"
 import razorpay from "razorpay"
+import { OAuth2Client } from "google-auth-library"
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 //API TO REGISTER USER
 const registerUser= async (req,res) => {
     try {
@@ -76,7 +80,7 @@ const getProfile=async (req,res) => {
         res.json({success:true,userData})
     } catch (error) {
         console.log("Error in Get profile of user in userController ",error);
-        res.json({success:"false",message:error.message})
+        res.json({success:false,message:error.message})
     }
 }
 
@@ -236,7 +240,6 @@ const verifyRazorpay=async (req,res) => {
         res.json({success:"false",message:error.message})
     }
 }
-
 const serverWaker = async (req,res) => {
     try {
         console.log("clicked the waker")
@@ -247,5 +250,49 @@ const serverWaker = async (req,res) => {
     }
 }
 
+const googleLoginController = async (req, res) => {
+    try {
+        const { token } = req.body;
+        if (!token) {
+            return res.json({ success: false, message: "Google credential token required" });
+        }
 
-export {registerUser,loginUser,getProfile,updateProfile,bookAppointment,listAppointment,cancelAppointment,paymentRazorpay,verifyRazorpay,serverWaker}
+        // Verify token using OAuth2Client
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+        const { email, name } = payload;
+
+        // Check if user already exists
+        let user = await userModel.findOne({ email });
+
+        if (!user) {
+            // Create new user with safe values for required fields
+            const placeholderPassword = Math.random().toString(36).slice(-10) + Date.now().toString();
+            const hashedPassword = await bcrypt.hash(placeholderPassword, 10);
+            user = await userModel.create({
+                name,
+                email,
+                password: hashedPassword,
+                gender: 'Not Selected',
+            });
+        }
+
+        // Generate login JWT token for current session
+        const localToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+        res.json({
+            success: true,
+            message: "Authentication successful",
+            token: localToken,
+        });
+    } catch (error) {
+        console.error("Error verifying Google token: ", error);
+        res.json({ success: false, message: "Authentication failed. Invalid Google token." });
+    }
+};
+
+export {registerUser,loginUser,getProfile,updateProfile,bookAppointment,listAppointment,cancelAppointment,paymentRazorpay,verifyRazorpay,serverWaker,googleLoginController}

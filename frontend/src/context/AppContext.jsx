@@ -11,7 +11,7 @@ const AppContextProvider=(props)=>{
     const loadUserProfileData=async (params) => {
         try {
             const {data}=await axios.get(backendUrl+'/api/user/get-profile',{headers:{token}})
-            if(data.success){
+            if(data.success && data.success !== 'false'){
                 // console.log("data is ",data.userData)
                 // console.log("address.line1 ",data.userData.address.line1)
                 // console.log("address.line1 ",data.userData.address.line2)
@@ -19,6 +19,8 @@ const AppContextProvider=(props)=>{
             }
             else{
                 toast.error(data.message)
+                setToken('')
+                localStorage.removeItem('token')
             }
         } catch (error) {
             console.log(error);

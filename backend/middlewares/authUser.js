@@ -7,7 +7,7 @@ const authUser= async (req,res,next) => {
 
         const {token}=req.headers
         if(!token){
-            return res.json({success:"false",message:"Not Authirized Login Again"})
+            return res.json({success:false,message:"Not Authirized Login Again"})
         }
         // console.log("in auth User token is ",token)
         const token_decode=jwt.verify(token,process.env.JWT_SECRET);
@@ -17,7 +17,7 @@ const authUser= async (req,res,next) => {
 
     } catch (error) {
         console.log("Error in Auth User middleware ",error);
-        res.json({success:"false",message:error.message})
+        res.json({success:false,message:error.message})
     }
 }
 
